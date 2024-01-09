@@ -13,5 +13,11 @@ namespace spartaTextDungeon
             // Test 2
             // Test 33
         }
+
+        class Fight
+        {
+            public int x;
+            public int y;
+        }
     }
 }
