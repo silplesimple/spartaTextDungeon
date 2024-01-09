@@ -1,4 +1,6 @@
-﻿namespace spartaTextDungeon
+﻿using static System.Net.Mime.MediaTypeNames;
+
+namespace spartaTextDungeon
 {
     internal class Program
     {
@@ -8,7 +10,8 @@
             // 너 내가 보이니
             // test
             // SDG
-
+            // Test 2
+            // Test 3
         }
     }
 }
