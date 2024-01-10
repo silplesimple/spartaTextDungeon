@@ -6,7 +6,7 @@ namespace spartaTextDungeon
     {
         static void Main(string[] args)
         {
-            // 모든 코드을 합쳐 실제 게임을 실행 시키는 곳
+            // 모든 코드을 합쳐 실제 게임을 실행 시키는 곳!
         }
     }
 }
