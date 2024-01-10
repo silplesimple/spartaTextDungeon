@@ -11,7 +11,7 @@ namespace spartaTextDungeon
         static void Main(string[] args)
         {
             // 인벤토리
-            // 안녕하세요
+           
         }
     }
 }
