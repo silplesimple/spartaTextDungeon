@@ -45,7 +45,7 @@ namespace spartaTextDungeon
 
         private static void PlayerAttack(Player player, List<Monster> monsters)
         {
-
+            Console.WriteLine("\n1. 공격");
         }
     }
 
@@ -83,7 +83,7 @@ namespace spartaTextDungeon
     {
         public int AttackPower { get; private set; }
 
-        public Player(string name, int level, int maxHP) : base(name, level, maxHP)
+        public Player(string name, int level, int maxHP) : base(name, level, maxHP) 
         {
             AttackPower = 10;   // 플레이어의 기본 공격력 설정
         }
