@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace spartaTextDungeon
@@ -10,6 +11,13 @@ namespace spartaTextDungeon
     {
         static void Main(string[] args)
         {
+            int inputNumber;
+            inputNumber = int.Parse(Console.ReadLine());
+            Battle();
+        }
+
+        private static void Battle()
+        {
             Player player = new Player("Chad", 1, 100);
             // 몬스터 객체들을 저장하는 동적 배열
             // List<T> 클래스는 제네릭 타입으로, 여기서 `T`는 저장되는 요소의 타입을 나타냄
@@ -17,7 +25,8 @@ namespace spartaTextDungeon
             {
                 new Monster("미니언", 2, 15),
                 new Monster("대포미니언", 5, 25),
-                new Monster("공허충", 3, 10)
+                new Monster("공허충", 3, 10),
+                new Monster("마스터 이", 10, 100)
             };
 
             // 전투 시작
@@ -26,28 +35,33 @@ namespace spartaTextDungeon
 
             // 플레이어 공격
             PlayerAttack(player, monsters);
-        }
 
+        }
         private static void DisplayStatus(Player player, List<Monster> monsters)
         {
-            foreach (var monster in monsters)
+            foreach (Monster monster in monsters)
             {
-                Console.WriteLine($"{monster}");
+                RandomMonster(monster);               
             }
+
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine($"[내정보]\n{player}");
         }
-
+        private static void RandomMonster(Monster monsters)
+        {
+            Console.WriteLine($"{monsters}");
+        }
+        
         private static void PlayerAttack(Player player, List<Monster> monsters)
         {
 
         }
 
 
-        class Character
+        class Character//캐릭터 범용 클래스
         {
-            public string Name { get; protected set; }
+            public string Name { get; protected set; }//캐릭터 이름
             public int Level { get; protected set; }
             public int MaxHP { get; protected set; }
             public int HP { get; protected set; }       // protected set: 해당 속성을 클래스 내부와 파생 클래스에서만 수정할 수 있도록 해준다.
@@ -93,6 +107,7 @@ namespace spartaTextDungeon
             {
                 AttackPower = 5 * level;    // 몬스터의 공격력은 레벨에 비례하도록 설정
             }
+            
 
             public override string ToString()
             {
