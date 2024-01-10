@@ -104,5 +104,3 @@ namespace spartaTextDungeon
         }
     }
 }
-
-//test..
