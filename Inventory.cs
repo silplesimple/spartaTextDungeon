@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace spartaTextDungeon
 {
-    internal class Program2
+    internal class Inventory
     {
-        // 새로운 프로젝트
-
-        //동기화
-
-        // 받기 완료 !!
+        static void Main(string[] args)
+        {
+            // 인벤토리
+        }
     }
 }
