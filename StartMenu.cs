@@ -1,5 +1,6 @@
 ﻿using System;
-
+//테스트 커밋
+//spartaTextDungeon.csproj 커밋하지 말기
 namespace spartaTextDungeon
 {
     internal class StartMenu
@@ -17,7 +18,7 @@ namespace spartaTextDungeon
             // 1.선택 멘트를 줌
             // 2. 선택결과값을 검증함
             // 3. 선택 결과에 따라 메뉴로 보내줌
-
+            
             Console.Clear();
             Console.WriteLine($"◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
             //Console.WriteLine("{0}",("◆")*15);
