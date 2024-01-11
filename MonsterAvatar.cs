@@ -9,13 +9,14 @@ namespace spartaTextDungeon
 {
     internal class MonsterAvatar
     {
+        private static List<Monster> randdomMonster = new List<Monster>();
         static void Main(string[] args)
         {
             int inputNumber;
            //inputNumber = int.Parse(Console.ReadLine());
             Battle();
         }
-
+        
         private static void Battle()
         {
             Console.Clear();
@@ -28,75 +29,47 @@ namespace spartaTextDungeon
                 new Monster(1,"대포미니언", 5, 25),
                 new Monster(2,"공허충", 3, 10),              
             };
-
+            
+            
+            
             // 전투 시작
             Console.WriteLine("Battle!!\n");
-            DisplayStatus(player, monsters);
+            CreateMonster(monsters);
+            DisplayStatus(player);
 
             // 플레이어 공격
             PlayerAttack(player, monsters);
 
         }
-        private static void DisplayStatus(Player player, List<Monster> monsters)
-        {   
-            Random random =new Random();
-            int createMonster = random.Next(1,5);//몬스터 마리수
-            bool firstMonsterCheck = false;
-            foreach (Monster monster in monsters)
-            {
-                if (!firstMonsterCheck)
-                    FirstMonster(monster, ref createMonster, ref firstMonsterCheck);
-                else
-                {
-                    RandomMonster(monster, ref createMonster);
-                }
-
-                if(createMonster<=0)
-                {
-                    break;
-                }
-                
-            }
-            
+        
+        
+        
+        private static void DisplayStatus(Player player)
+        {                           
+                             
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine($"[내정보]\n{player}");
         }
-        private static void FirstMonster(Monster monster,ref int createMonster,ref bool firstMonsterCheck)
+        private static void CreateMonster(List<Monster> monsters)
         {
             Random random = new Random();
-            if (createMonster > 0)
+            int rndcnt = random.Next(1, 5);
+            for(int i=0;i<rndcnt;i++)
             {
-                int randomIndex = random.Next(0,3);
-                if (randomIndex <= monster.CheckNumber)
+                int rndIndex = random.Next(0, 3);
+                foreach (Monster monster in monsters)
                 {
-                    Console.WriteLine($"{monster}");
-                    
-                    createMonster--;
-                    firstMonsterCheck = true;
-                }
-            }
-        }
-        private static void RandomMonster(Monster monster,ref int createMonster)
-        {            
-            Random random = new Random();            
-            for(int i=0;i<3;i++)
-            {
-                if (createMonster > 0)
-                {
-                    int randomIndex = random.Next(0,3);
-                    if (randomIndex == monster.CheckNumber)
+                    if ( rndIndex == monster.CheckIndex)
                     {
                         Console.WriteLine($"{monster}");
-                        createMonster--;
+                        break;
                     }
                 }
-
-            }          
-
+                                
+            }
         }
-        
-        
+
         private static void PlayerAttack(Player player, List<Monster> monsters)
         {
 
@@ -147,10 +120,10 @@ namespace spartaTextDungeon
         {
             public int AttackPower { get; private set; }
 
-            public int CheckNumber { get; set; }
-            public Monster(int checkNumber, string name, int level, int maxHP) : base(name, level, maxHP)
+            public int CheckIndex { get; set; }
+            public Monster(int checkIndex, string name, int level, int maxHP) : base(name, level, maxHP)
             {
-                CheckNumber = checkNumber;
+                CheckIndex = checkIndex;
                 AttackPower = 5 * level;    // 몬스터의 공격력은 레벨에 비례하도록 설정
             }
             
