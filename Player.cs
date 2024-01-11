@@ -1,220 +1,193 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Reflection.Emit;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
-namespace spartaTextDungeon
+class Program
 {
-    internal class DungeonGame
+    static void Main()
     {
-        static void Main()
+        Player player = new Player("Chad", "전사", 100);
+        Monster[] monsters = {
+            new Monster("Lv.2 미니언", 15, 5),
+            new Monster("Lv.5 대포미니언", 25, 8),
+            new Monster("LV.3 공허충", 10, 3)
+        };
+
+        do
         {
-            Player player = new Player("Chad", 1, 100, 10, 5);
-            // 몬스터 객체들을 저장하는 동적 배열
-            // List<T> 클래스는 제네릭 타입으로, 여기서 `T`는 저장되는 요소의 타입을 나타냄
-            List<Monster> monsters = new List<Monster>
-            {
-                new Monster("미니언", 2, 5, 6, 0),
-                new Monster("대포미니언", 5, 15, 15, 0),
-                new Monster("공허충", 3, 10, 10, 0)
-            };
-
-            // 전투 시작
-            Console.WriteLine("Battle!!\n");
-            DisplayStatus(player, monsters);
-
-            // 플레이어 공격
-            PlayerAttack(player, monsters);
-
-            // 몬스터 공격
-            //EnemyPhase(player, monsters);
-
-            // 전투 결과
-            DisplayResult(player, monsters);
-        }
-
-
-
-        private static void DisplayStatus(Player player, List<Monster> monsters)
-        {
-            foreach (var monster in monsters)
-            {
-                Console.WriteLine($"{monster}");
-            }
             Console.Clear();
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine($"[내정보]\n{player}");
-        }
 
-        private static void PlayerAttack(Player player, List<Monster> currentMonsters)
-        {
-            Console.WriteLine("** Battle!! **");
-            int targetIndex = GetMonsterIndex(currentMonsters);
-            if (targetIndex < 0 || targetIndex >= currentMonsters.Count)
+            DisplayInfo(player, monsters);
+            Console.WriteLine("\n1. 공격");
+            Console.WriteLine("0. 취소");
+
+            int choice = GetUserInput(1); 
+
+            if (choice == 0)
             {
-                Console.WriteLine("잘못된 입력입니다.");
-                return;
-            }
-
-            Monster targetMonster = currentMonsters[targetIndex];
-
-            if (targetMonster.IsDead)
-            {
-                Console.WriteLine("잘못된 입력입니다.");
-                return;
-            }
-
-            // 공격 로직
-            int damage = CalculateDamage(player.AttackPower);
-            targetMonster.TakeDamage(damage);
-
-            Console.WriteLine($"{player.Name}의 공격!\n{targetMonster}을(를) 맞췄습니다. [데미지 : {damage}]");
-
-            // 몬스터가 죽었는지 확인
-            if (targetMonster.IsDead)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine($"{targetMonster.Name}이(가) 죽었습니다.");
-                Console.ResetColor();
-            }
-        }
-
-        //private static EnemyPhase(Player player, List<Monster> currentMonsters)
-        //{
-        //    Console.WriteLine("\nBattle!! - Enemy Phase");
-
-        //    foreach (var monster in currentMonsters)
-        //    {
-        //        if (!monster.IsDead)
-        //        {
-        //            int damage = CalculateDamage(monster.AttackPower);
-        //            player.TakeDamage(damage);
-
-        //            Console.WriteLine($"{monster.Name}의 공격!\n{player}을(를) 맞췄습니다. [데미지 : {damage}]");
-        //            DisplayStatus(player, currentMonsters);
-
-        //            if (player.IsDead)
-        //            {
-        //                Console.ForegroundColor = ConsoleColor.DarkGray;
-        //                Console.WriteLine("You Lose\n");
-        //                Console.ResetColor();
-        //                return;
-        //            }
-        //        }
-        //    }
-        //}
-
-        static void DisplayResult(Player player, List<Monster> monsters)
-        {
-            Console.WriteLine("\n3. 전투 결과\n");
-            DisplayStatus(player, monsters);
-
-            if (monsters.TrueForAll(monster => monster.IsDead))
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\nVictory\n던전에서 몬스터들을 잡았습니다.");
+                Console.WriteLine("취소되었습니다.");
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine($"\nYou Lose\n{player}");
+                Console.Clear();
+                AttackPhase(player, monsters);
             }
 
-            Console.ResetColor();
+        } while (true);
+    }
+
+    static void DisplayInfo(Player player, Monster[] monsters)
+    {
+        Console.Clear();
+        Console.WriteLine("Battle!!");
+        Console.WriteLine($"\n[내정보]");
+        Console.WriteLine($"{player}");
+
+        Console.WriteLine("");
+        foreach (var monster in monsters)
+        {
+            Console.WriteLine($"{monster}");
+        }
+    }
+
+    static void AttackPhase(Player player, Monster[] monsters)
+    {
+        DisplayInfo(player, monsters);
+
+        for (int i = 0; i < monsters.Length; i++)
+        {
+            Console.WriteLine($"{i + 1}. {monsters[i]}");
         }
 
-        static int GetMonsterIndex(List<Monster> monsters)
-        {
-            Console.WriteLine("\n대상을 선택해주세요.\n");
+        Console.WriteLine("0. 취소");
 
-            for (int i = 0; i < monsters.Count; i++)
+        int choice = GetUserInput(monsters.Length);
+
+        if (choice == 0)
+        {
+            Console.WriteLine("취소되었습니다.");
+        }
+        else
+        {
+            Attack(player, monsters[choice - 1]);
+            DisplayInfo(player, monsters);
+
+            if (!monsters[choice - 1].IsDead())
             {
-                Console.WriteLine($"{i + 1}. {monsters[i]}");
+                DisplayInfo(player, monsters);
             }
+        }
 
-            Console.WriteLine("");
-            Console.WriteLine("0. 취소");
-            Console.Write(">>");
-            int choice;
-            while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > monsters.Count)
+        Console.WriteLine("\n게임 종료");
+        Console.ReadKey();
+    }
+
+    static void Attack(Player player, Monster monster)
+    {
+        if (monster.IsDead())
+        {
+            Console.WriteLine("잘못된 입력입니다. 이미 죽은 몬스터를 공격할 수 없습니다.");
+        }
+        else
+        {
+            Console.WriteLine($"몬스터 {monster.Name}을(를) 공격합니다.");
+            int damage = CalculateDamage(player.AttackPower);
+            monster.TakeDamage(damage);
+            Console.WriteLine($"몬스터에게 {damage}의 데미지를 입혔습니다.");
+
+            if (monster.IsDead())
             {
-                Console.WriteLine("잘못된 입력입니다.");
+                Console.WriteLine($"몬스터 {monster.Name}을(를) 처치했습니다.");
             }
-
-            return choice - 1;
-        }
-
-        static int CalculateDamage(int attackPower)
-        {
-            double randomFactor = new Random().NextDouble() * 0.2 + 0.9; // 0.9 ~ 1.1 사이의 랜덤값
-            int damage = (int)Math.Ceiling(attackPower * randomFactor);
-            return damage;
         }
     }
 
-    public class Character
+    static int CalculateDamage(int baseAttack)
     {
-        public string Name { get; protected set; }
-        public int Level { get; protected set; }
-        public int MaxHP { get; protected set; }
-        public int HP { get; protected set; }       // protected set: 해당 속성을 클래스 내부와 파생 클래스에서만 수정할 수 있도록 해준다.
-        public int Atk { get; protected set; }
-        public int Def { get; protected set; }
+        Random random = new Random();
+        double error = Math.Ceiling(baseAttack * 0.1);      // 공격력의 10% 오차, 소수점은 올림 처리
+        int randomValue = random.Next(-(int)error, (int)error + 1);
+        return baseAttack + randomValue;
+    }
 
-        public bool IsDead => HP <= 0;      // IsDead: 현재 체력이 0 이하이면 참을 반환
-
-        public Character(string name, int level, int maxHP, int atk, int def)
+    static int GetUserInput(int maxChoice)
+    {
+        int choice;
+        while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > maxChoice)
         {
-            Name = name;
-            Level = level;
-            MaxHP = maxHP;
-            HP = MaxHP;
-            Atk = atk;
-            Def = def;
+            Console.WriteLine("올바르지 않은 입력입니다. 다시 입력해주세요.");
         }
+        return choice;
+    }
+}
 
-        public virtual void TakeDamage(int damage)      // TakeDamage(int damage): 캐릭터가 피해를 받을 때 호출되는 메서드
-        {                                               // 현재 체력에서 피해만큼 감소시키고 체력이 음수가 되지 않도록 조정
-            HP -= damage;
-            if (HP < 0)
-                HP = 0;
-        }
+class Player
+{
+    public string Name { get; }
+    public string Class { get; }
+    public int MaxHP { get; }
+    public int CurrentHP { get; private set; }
+    public int AttackPower { get; }
 
-        public override string ToString()
+    public Player(string name, string playerClass, int maxHP)
+    {
+        Name = name;
+        Class = playerClass;
+        MaxHP = maxHP;
+        CurrentHP = maxHP;
+        AttackPower = 10;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        CurrentHP -= damage;
+        if (CurrentHP < 0)
         {
-            return $"Lv.{Level} {Name} (전사)\nHP {HP}/{MaxHP}";    // 캐릭터의 상태를 문자열로 반환
+            CurrentHP = 0;
         }
     }
 
-    class Player : Character
+    public bool IsDead()
     {
-        public int AttackPower { get; private set; }
+        return CurrentHP <= 0;
+    }
 
-        public Player(string name, int level, int maxHP, int atk, int def) : base(name, level, maxHP, atk, def) 
+    public override string ToString()
+    {
+        return $"Lv.1 {Name} ({Class})\nHP {CurrentHP}/{MaxHP}";
+    }
+}
+
+class Monster
+{
+    public string Name { get; }
+    public int MaxHP { get; }
+    public int CurrentHP { get; private set; }
+    public int AttackPower { get; }
+
+    public Monster(string name, int maxHP, int attackPower)
+    {
+        Name = name;
+        MaxHP = maxHP;
+        CurrentHP = maxHP;
+        AttackPower = attackPower;
+    }
+
+    public bool IsDead()
+    {
+        return CurrentHP <= 0;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        CurrentHP -= damage;
+        if (CurrentHP < 0)
         {
-            AttackPower = 10;   // 플레이어의 기본 공격력 설정
+            CurrentHP = 0;
         }
     }
 
-    class Monster : Character       // 클래스를 상속받아 플레이어 특화 속성을 추가
+    public override string ToString()
     {
-        public int AttackPower { get; private set; }
-
-        public Monster(string name, int level, int maxHP, int atk, int def) : base(name, level, maxHP, atk, def)
-        {
-            AttackPower = 5 * level;    // 몬스터의 공격력은 레벨에 비례하도록 설정
-        }
-
-        public override string ToString()
-        {
-            return $"Lv.{Level} {Name} HP {HP}";    // 몬스터의 상태를 문자열로 반환
-        }
+        string status = IsDead() ? "Dead" : $"HP {CurrentHP}";
+        return $"{Name}  {status}";
     }
 }
