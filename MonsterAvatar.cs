@@ -27,18 +27,30 @@ namespace spartaTextDungeon
             {
                 new Monster(0,"미니언", 2, 15),
                 new Monster(1,"대포미니언", 5, 25),
-                new Monster(2,"공허충", 3, 10),              
+                new Monster(2,"공허충", 3, 10) 
             };
             
-            
+           
             
             // 전투 시작
-            Console.WriteLine("Battle!!\n");
-            CreateMonster(monsters);
+            Console.WriteLine("Battle!!\n");            
             DisplayStatus(player);
-
+            
             // 플레이어 공격
             PlayerAttack(player, monsters);
+            
+            List<Monster> saveMonsters=RandomMonster(monsters);//몬스터 정보를 1~4마리를 랜덤으로 저장
+            foreach(Monster monster in saveMonsters)
+            {
+                Console.WriteLine($"{monster}");
+            }
+            
+        }
+
+        private void EnemyPhase()
+        {
+            Console.Clear();
+            
 
         }
         
@@ -51,23 +63,25 @@ namespace spartaTextDungeon
             Console.WriteLine("");
             Console.WriteLine($"[내정보]\n{player}");
         }
-        private static void CreateMonster(List<Monster> monsters)
+        private static List<Monster> RandomMonster(List<Monster> monsters)
         {
+            List<Monster> saveMonster= new List<Monster>();
             Random random = new Random();
             int rndcnt = random.Next(1, 5);
             for(int i=0;i<rndcnt;i++)
             {
-                int rndIndex = random.Next(0, 3);
+                int rndIndex = random.Next(0, monsters.Count);
                 foreach (Monster monster in monsters)
                 {
                     if ( rndIndex == monster.CheckIndex)
-                    {
-                        Console.WriteLine($"{monster}");
+                    {                        
+                        saveMonster.Add(monster);
                         break;
                     }
                 }
                                 
             }
+            return saveMonster;
         }
 
         private static void PlayerAttack(Player player, List<Monster> monsters)
