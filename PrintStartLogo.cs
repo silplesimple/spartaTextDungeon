@@ -2,17 +2,17 @@
 
 namespace spartaTextDungeon
 {
-	internal class SrintStartLogo
+	internal class PrintStartLogo
     {
 		static void Main(string[] args)
 		{
 
-			PrintStartLogo();
+			PrintStartLogo1();
 
 		}
 
 
-		private static void PrintStartLogo()
+		private static void PrintStartLogo1()
 		{
 
 

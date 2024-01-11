@@ -6,9 +6,12 @@ namespace spartaTextDungeon
     {
         static void Main(string[] args)
         {
-            //깃허브 테스트 
-            // 이제 올라간다; ;
-            //테스트 완료
+
+            StartMenu1();
+        }
+
+        private static void StartMenu1()
+        {
             
         }
     }
