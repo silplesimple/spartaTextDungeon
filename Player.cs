@@ -39,12 +39,15 @@ namespace spartaTextDungeon
             DisplayResult(player, monsters);
         }
 
+
+
         private static void DisplayStatus(Player player, List<Monster> monsters)
         {
             foreach (var monster in monsters)
             {
                 Console.WriteLine($"{monster}");
             }
+            Console.Clear();
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine($"[내정보]\n{player}");
@@ -52,6 +55,7 @@ namespace spartaTextDungeon
 
         private static void PlayerAttack(Player player, List<Monster> currentMonsters)
         {
+            Console.WriteLine("** Battle!! **");
             int targetIndex = GetMonsterIndex(currentMonsters);
             if (targetIndex < 0 || targetIndex >= currentMonsters.Count)
             {
@@ -128,18 +132,20 @@ namespace spartaTextDungeon
 
         static int GetMonsterIndex(List<Monster> monsters)
         {
-            Console.WriteLine("\n대상을 선택해주세요.");
+            Console.WriteLine("\n대상을 선택해주세요.\n");
 
             for (int i = 0; i < monsters.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {monsters[i]}");
             }
 
+            Console.WriteLine("");
             Console.WriteLine("0. 취소");
+            Console.Write(">>");
             int choice;
             while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > monsters.Count)
             {
-                Console.WriteLine("잘못된 입력입니다. 다시 입력해주세요.");
+                Console.WriteLine("잘못된 입력입니다.");
             }
 
             return choice - 1;
