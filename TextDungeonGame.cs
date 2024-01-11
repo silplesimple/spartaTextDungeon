@@ -1,12 +1,13 @@
 ﻿using static System.Net.Mime.MediaTypeNames;
 
+// 모든 코드을 여기에 합쳐 수정!
 namespace spartaTextDungeon
 {
     internal class TextDungeonGame
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            // 모든 코드을 합쳐 실제 게임을 실행 시키는 곳!
+
         }
     }
 }
