@@ -71,6 +71,7 @@ namespace spartaTextDungeon
                 if (randomIndex <= monster.CheckNumber)
                 {
                     Console.WriteLine($"{monster}");
+                    
                     createMonster--;
                     firstMonsterCheck = true;
                 }
