@@ -12,21 +12,21 @@ namespace spartaTextDungeon
         static void Main(string[] args)
         {
             int inputNumber;
-            inputNumber = int.Parse(Console.ReadLine());
+           //inputNumber = int.Parse(Console.ReadLine());
             Battle();
         }
 
         private static void Battle()
         {
+            Console.Clear();
             Player player = new Player("Chad", 1, 100);
             // 몬스터 객체들을 저장하는 동적 배열
             // List<T> 클래스는 제네릭 타입으로, 여기서 `T`는 저장되는 요소의 타입을 나타냄
             List<Monster> monsters = new List<Monster>
             {
-                new Monster("미니언", 2, 15),
-                new Monster("대포미니언", 5, 25),
-                new Monster("공허충", 3, 10),
-                new Monster("마스터 이", 10, 100)
+                new Monster(0,"미니언", 2, 15),
+                new Monster(1,"대포미니언", 5, 25),
+                new Monster(2,"공허충", 3, 10),              
             };
 
             // 전투 시작
@@ -38,20 +38,63 @@ namespace spartaTextDungeon
 
         }
         private static void DisplayStatus(Player player, List<Monster> monsters)
-        {
+        {   
+            Random random =new Random();
+            int createMonster = random.Next(1,5);//몬스터 마리수
+            bool firstMonsterCheck = false;
             foreach (Monster monster in monsters)
             {
-                RandomMonster(monster);               
-            }
+                if (!firstMonsterCheck)
+                    FirstMonster(monster, ref createMonster, ref firstMonsterCheck);
+                else
+                {
+                    RandomMonster(monster, ref createMonster);
+                }
 
+                if(createMonster<=0)
+                {
+                    break;
+                }
+                
+            }
+            
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine($"[내정보]\n{player}");
         }
-        private static void RandomMonster(Monster monsters)
+        private static void FirstMonster(Monster monster,ref int createMonster,ref bool firstMonsterCheck)
         {
-            Console.WriteLine($"{monsters}");
+            Random random = new Random();
+            if (createMonster > 0)
+            {
+                int randomIndex = random.Next(0,3);
+                if (randomIndex <= monster.CheckNumber)
+                {
+                    Console.WriteLine($"{monster}");
+                    createMonster--;
+                    firstMonsterCheck = true;
+                }
+            }
         }
+        private static void RandomMonster(Monster monster,ref int createMonster)
+        {            
+            Random random = new Random();            
+            for(int i=0;i<3;i++)
+            {
+                if (createMonster > 0)
+                {
+                    int randomIndex = random.Next(0,3);
+                    if (randomIndex == monster.CheckNumber)
+                    {
+                        Console.WriteLine($"{monster}");
+                        createMonster--;
+                    }
+                }
+
+            }          
+
+        }
+        
         
         private static void PlayerAttack(Player player, List<Monster> monsters)
         {
@@ -103,8 +146,10 @@ namespace spartaTextDungeon
         {
             public int AttackPower { get; private set; }
 
-            public Monster(string name, int level, int maxHP) : base(name, level, maxHP)
+            public int CheckNumber { get; set; }
+            public Monster(int checkNumber, string name, int level, int maxHP) : base(name, level, maxHP)
             {
+                CheckNumber = checkNumber;
                 AttackPower = 5 * level;    // 몬스터의 공격력은 레벨에 비례하도록 설정
             }
             
