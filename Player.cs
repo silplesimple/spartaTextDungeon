@@ -28,7 +28,7 @@ class Program
             else
             {
                 Console.Clear();
-                AttackPhase(player, monsters);
+                Attack(player, monsters);
             }
 
         } while (true);
@@ -48,7 +48,7 @@ class Program
         }
     }
 
-    static void AttackPhase(Player player, Monster[] monsters)
+    static void Attack(Player player, Monster[] monsters)
     {
         DisplayInfo(player, monsters);
 
