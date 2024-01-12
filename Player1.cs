@@ -1,4 +1,7 @@
-﻿using System;
+﻿using spartaTextDungeon.finalFile;
+using System;
+using System.Numerics;
+using System.Reflection.Emit;
 
 class Program
 {
@@ -17,7 +20,7 @@ class Program
 
             DisplayInfo(player, monsters);
             Console.WriteLine("\n1. 공격");
-            Console.WriteLine("0. 취소");
+            Console.WriteLine("0. 취소\n");
 
             int choice = GetUserInput(1);
 
@@ -33,18 +36,22 @@ class Program
         }
     }
 
+    static void monterInfo()
+    {
+        Console.WriteLine("Lv.2 미니언  HP 15");
+        Console.WriteLine("Lv.5 대포미니언 HP 25");
+        Console.WriteLine("LV.3 공허충 HP 10");
+    }
+
     static void DisplayInfo(Player1 player, Monster[] monsters)
     {
         Console.Clear();
         Console.WriteLine("Battle!!");
         Console.WriteLine($"\n[내정보]");
         Console.WriteLine($"{player}");
-
         Console.WriteLine("");
-        foreach (var monster in monsters)
-        {
-            Console.WriteLine($"{monster}");
-        }
+        monterInfo();
+        Console.WriteLine("");
     }
 
     static void Attack(Player1 player, Monster[] monsters)
@@ -88,7 +95,7 @@ class Program
         else
         {
             Console.WriteLine($"몬스터 {monster.Name}을(를) 공격합니다.");
-            int damage = CalculateDamage(player.AttackPower);
+            int damage = CalculateDamage(player.Attack);
             monster.TakeDamage(damage);
             Console.WriteLine($"몬스터에게 {damage}의 데미지를 입혔습니다.");
 
@@ -123,35 +130,35 @@ class Player1
     public string Name { get; }
     public string Class { get; }
     public int MaxHP { get; }
-    public int CurrentHP { get; private set; }
-    public int AttackPower { get; }
+    public int HP { get; private set; }
+    public int Attack { get; }
 
     public Player1(string name, string playerClass, int maxHP)
     {
         Name = name;
         Class = playerClass;
         MaxHP = maxHP;
-        CurrentHP = maxHP;
-        AttackPower = 10;
+        HP = maxHP;
+        Attack = 10;
     }
 
     public void TakeDamage(int damage)
     {
-        CurrentHP -= damage;
-        if (CurrentHP < 0)
+        HP -= damage;
+        if (HP < 0)
         {
-            CurrentHP = 0;
+            HP = 0;
         }
     }
 
     public bool IsDead()
     {
-        return CurrentHP <= 0;
+        return HP <= 0;
     }
 
     public override string ToString()
     {
-        return $"Lv.1 {Name} ({Class})\nHP {CurrentHP}/{MaxHP}";
+        return $"Lv.1 {Name} ({Class})\nHP {HP}/{MaxHP}";
     }
 }
 
