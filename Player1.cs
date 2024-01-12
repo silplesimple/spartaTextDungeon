@@ -4,7 +4,7 @@ class Program
 {
     static void Main()
     {
-        Player player = new Player("Chad", "전사", 100);
+        Player1 player = new Player1("Chad", "전사", 100);
         Monster[] monsters = {
             new Monster("Lv.2 미니언", 15, 5),
             new Monster("Lv.5 대포미니언", 25, 8),
@@ -34,7 +34,7 @@ class Program
         } while (true);
     }
 
-    static void DisplayInfo(Player player, Monster[] monsters)
+    static void DisplayInfo(Player1 player, Monster[] monsters)
     {
         Console.Clear();
         Console.WriteLine("Battle!!");
@@ -48,7 +48,7 @@ class Program
         }
     }
 
-    static void Attack(Player player, Monster[] monsters)
+    static void Attack(Player1 player, Monster[] monsters)
     {
         DisplayInfo(player, monsters);
 
@@ -80,7 +80,7 @@ class Program
         Console.ReadKey();
     }
 
-    static void Attack(Player player, Monster monster)
+    static void Attack(Player1 player, Monster monster)
     {
         if (monster.IsDead())
         {
@@ -119,7 +119,7 @@ class Program
     }
 }
 
-class Player
+class Player1
 {
     public string Name { get; }
     public string Class { get; }
@@ -127,7 +127,7 @@ class Player
     public int CurrentHP { get; private set; }
     public int AttackPower { get; }
 
-    public Player(string name, string playerClass, int maxHP)
+    public Player1(string name, string playerClass, int maxHP)
     {
         Name = name;
         Class = playerClass;
