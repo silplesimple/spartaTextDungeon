@@ -244,7 +244,7 @@ namespace spartaTextDungeon
                     case ConsoleKey.D0:
                         Console.WriteLine();
                         Console.WriteLine("시작메뉴로 돌아갑니다.");
-                        break;      //return 시작메뉴화면
+                        break;     //return 시작메뉴화면
                     default:
                         Console.WriteLine("");
                         Console.WriteLine("잘못된 선택입니다. 다시 선택해 주세요");
