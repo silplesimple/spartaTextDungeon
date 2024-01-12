@@ -7,7 +7,8 @@ namespace spartaTextDungeon
     {
         static void Main()
         {
-
+            StartMenu.PrintStartLogo();
+            StartMenu.StartMenu1();
         }
     }
 }
