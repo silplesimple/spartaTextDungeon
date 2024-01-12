@@ -11,15 +11,15 @@ class Program
             new Monster("LV.3 공허충", 10, 3)
         };
 
-        do
-        {
+        while (true)
+        { 
             Console.Clear();
 
             DisplayInfo(player, monsters);
             Console.WriteLine("\n1. 공격");
             Console.WriteLine("0. 취소");
 
-            int choice = GetUserInput(1); 
+            int choice = GetUserInput(1);
 
             if (choice == 0)
             {
@@ -30,8 +30,7 @@ class Program
                 Console.Clear();
                 Attack(player, monsters);
             }
-
-        } while (true);
+        }
     }
 
     static void DisplayInfo(Player1 player, Monster[] monsters)
