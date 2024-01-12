@@ -12,7 +12,7 @@ namespace spartaTextDungeon
         private static List<Monster> randdomMonster = new List<Monster>();
         static void Main(string[] args)
         {
-            int inputNumber;
+            int inputIndex;
            //inputNumber = int.Parse(Console.ReadLine());
             Battle();
         }
@@ -44,14 +44,39 @@ namespace spartaTextDungeon
             {
                 Console.WriteLine($"{monster}");
             }
+
+            EnemyPhase(saveMonsters,player);
             
         }
 
-        private void EnemyPhase()
+        private static void EnemyPhase(List<Monster> saveMonsters, Player player)
         {
             Console.Clear();
-            
-
+            int inputIndex;
+            foreach(Monster monster in saveMonsters)
+            {
+                Console.Clear();
+                Console.WriteLine("Battle!!\n");
+                Console.WriteLine($"Lv.{monster.Level} {monster.Name}의 공격!");
+                Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {monster.AttackPower}]\n");
+                Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                Console.Write($"HP {player.HP}");
+                player.HP -= monster.AttackPower;
+                Console.WriteLine($"-> {player.HP}\n");
+                Console.WriteLine("0.다음\n");
+                Console.WriteLine("대상을 선택해주세요.\n>>");                    
+                inputIndex = int.Parse(Console.ReadLine());
+                if(inputIndex!=0)
+                {
+                    Console.WriteLine("잘못된 입력입니다.");
+                    while (inputIndex != 0)
+                    {
+                        inputIndex = int.Parse(Console.ReadLine());
+                        Console.WriteLine("잘못된 입력입니다.");
+                    }
+                }               
+            }
+            //PlayerTurn(saveMonsters, player);
         }
         
         
@@ -95,7 +120,7 @@ namespace spartaTextDungeon
             public string Name { get; protected set; }//캐릭터 이름
             public int Level { get; protected set; }
             public int MaxHP { get; protected set; }
-            public int HP { get; protected set; }       // protected set: 해당 속성을 클래스 내부와 파생 클래스에서만 수정할 수 있도록 해준다.
+            public int HP { get;  set; }       // protected set: 해당 속성을 클래스 내부와 파생 클래스에서만 수정할 수 있도록 해준다.
 
             public bool IsDead => HP <= 0;      // IsDead: 현재 체력이 0 이하이면 참을 반환
 
@@ -140,6 +165,7 @@ namespace spartaTextDungeon
                 CheckIndex = checkIndex;
                 AttackPower = 5 * level;    // 몬스터의 공격력은 레벨에 비례하도록 설정
             }
+            
             
 
             public override string ToString()

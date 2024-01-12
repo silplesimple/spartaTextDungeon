@@ -10,7 +10,7 @@
   <ItemGroup>
     <Compile Remove="Inventory.cs" />
     <Compile Remove="Monster.cs" />
-    <Compile Remove="MonsterAvatar.cs" />
+    <Compile Remove="Player.cs" />
     <Compile Remove="PrintStartLogo.cs" />
     <Compile Remove="StartMenu.cs" />
     <Compile Remove="Status.cs" />
