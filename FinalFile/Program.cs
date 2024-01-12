@@ -5,7 +5,7 @@
 using System.Reflection.Emit;
 using System.Xml.Linq;
 
-namespace spartaTextDungeon
+namespace spartaTextDungeon.finalFile
 {
     internal class Program
     {
@@ -20,8 +20,8 @@ namespace spartaTextDungeon
 
         private static void GameDataSetting()
         {
-            _player = new Player("Chad", "전사", 100, 100, 10,5,1500,1);
-            List<Monster>  createMonster = new List<Monster>{
+            _player = new Player("Chad", "전사", 100, 100, 10, 5, 1500, 1);
+            List<Monster> createMonster = new List<Monster>{
             new Monster("Lv.2 미니언", 15, 5, 6,0),
             new Monster("Lv.5 대포미니언", 25, 8, 10,1),
             new Monster("LV.3 공허충", 10, 3, 8,2) };
@@ -48,9 +48,9 @@ namespace spartaTextDungeon
             return saveMonster;
         }
         private static void StartMenu()
-        {            
+        {
             Console.Clear();
-            Console.WriteLine($"◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");            
+            Console.WriteLine($"◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
             Console.WriteLine($"스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine($"이곳에서 던전으로 들어가기 전 활동을 할 수 있습니다.");
             Console.WriteLine($"◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
@@ -59,8 +59,8 @@ namespace spartaTextDungeon
             Console.WriteLine("2.전투 시작");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.WriteLine(">>");
-            
-            switch(CheckVailedInput(1,2))
+
+            switch (CheckVailedInput(1, 2))
             {
                 case 1:
                     State();
@@ -73,7 +73,7 @@ namespace spartaTextDungeon
 
         private static void Battle()
         {
-            
+
         }
 
         private static void State()
@@ -97,7 +97,7 @@ namespace spartaTextDungeon
             {
                 case 0:
                     StartMenu();
-                    break;               
+                    break;
             }
 
         }
@@ -105,7 +105,7 @@ namespace spartaTextDungeon
         private static int CheckVailedInput(int min, int max)
         {
             int saveIndex;
-            while(true)
+            while (true)
             {
                 string input = Console.ReadLine();
 
@@ -119,7 +119,7 @@ namespace spartaTextDungeon
                     Console.WriteLine("잘못된 입력입니다");
                     continue;
                 }
-                if (saveIndex< min || saveIndex > max)
+                if (saveIndex < min || saveIndex > max)
                 {
                     Console.WriteLine("잘못된 입력입니다");
                     continue;
@@ -156,6 +156,6 @@ namespace spartaTextDungeon
 
             Console.ReadKey();
         }
-        
+
     }
 }

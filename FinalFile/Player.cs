@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace spartaTextDungeon
+namespace spartaTextDungeon.finalFile
 {
-    internal  class Player
+    internal class Player
     {
         public string Name { get; }
         public string Class { get; }
@@ -17,7 +17,7 @@ namespace spartaTextDungeon
         public int Gold { get; }
         public int Level { get; }
 
-        public Player(string name, string playerClass, int maxHP, int hp, int attack,int def,int gold, int level )
+        public Player(string name, string playerClass, int maxHP, int hp, int attack, int def, int gold, int level)
         {
             Name = name;
             Class = playerClass;

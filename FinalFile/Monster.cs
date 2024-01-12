@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace spartaTextDungeon
+namespace spartaTextDungeon.finalFile
 {
     internal class Monster
     {
@@ -15,7 +15,7 @@ namespace spartaTextDungeon
         public int HP { get; private set; }
         public int Attack { get; }
         public int CheckIndex { get; set; }
-        public Monster(string name, int maxHP, int hp, int attack,int checkIndex)
+        public Monster(string name, int maxHP, int hp, int attack, int checkIndex)
         {
             Name = name;
             MaxHP = maxHP;
