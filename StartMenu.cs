@@ -10,7 +10,7 @@ namespace spartaTextDungeon
         //    StartMenu1();
         //}
 
-        static void StartMenu1()
+        public static void StartMenu1()
         {
             // 구성
             // 0. 화면정리
@@ -33,7 +33,7 @@ namespace spartaTextDungeon
 
 
         }
-        static void PrintStartLogo()
+        public static void PrintStartLogo()
         {
 
              Console.WriteLine($"▄████████    ▄███████▄    ▄████████    ▄████████     ███        ▄████████\n" +
