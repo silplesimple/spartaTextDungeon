@@ -258,7 +258,7 @@ namespace spartaTextDungeon
             }
         }
 
-        public static void StartMenu()
+        static void StartMenu()
         {
             Console.Clear();
             Console.WriteLine($"◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
@@ -271,7 +271,7 @@ namespace spartaTextDungeon
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.WriteLine(">>");
-           
+
             //int keyInput = int.Parse(Console.ReadLine());
             switch (CheckValidInput(1, 2))
             {
@@ -285,7 +285,6 @@ namespace spartaTextDungeon
             }
         }
 
-        //StartMenu : 선택 검증1
         private static int CheckValidInput(int min, int max)
         {
             // 설명
