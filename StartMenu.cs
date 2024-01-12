@@ -64,5 +64,3 @@ namespace spartaTextDungeon
         }
     }
 }
-
-// 시작화면!
