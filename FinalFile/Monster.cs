@@ -15,13 +15,15 @@ namespace spartaTextDungeon.finalFile
         public int HP { get; private set; }
         public int Attack { get; }
         public int CheckIndex { get; set; }
-        public Monster(string name, int maxHP, int hp, int attack, int checkIndex)
+        public int Level { get; set; }
+        public Monster(string name, int maxHP, int hp, int attack, int checkIndex, int level)
         {
             Name = name;
             MaxHP = maxHP;
             HP = maxHP;
             Attack = attack;
             CheckIndex = checkIndex;
+            Level = level;
         }
 
         public bool IsDead()
