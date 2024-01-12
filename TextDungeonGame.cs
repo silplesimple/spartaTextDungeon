@@ -18,11 +18,17 @@ namespace spartaTextDungeon
         public void BattleStart()
         {
             Player player = new Player("Chad", "전사", 100, 100, 10);
-            Monster[] monsters = {
+            List<Monster> Monsters = new List<Monster>
+            { 
             new Monster("Lv.2 미니언", 15, 5, 6),
             new Monster("Lv.5 대포미니언", 25, 8, 10),
             new Monster("LV.3 공허충", 10, 3, 8)
         };
+            Random random = new Random();
+            List<Monster> shuffledMonsters = Monsters.OrderBy(x => random.Next()).ToList(); // LINQ 메서드를 사용하여 목록의 몬스터 순서를 섞음
+                                                                                            // 정렬을 위한 키로 사용되어 무작위 순서를 보장
+            int numMonsters = random.Next(1, 4);                                            // Monsters.OrderBy(random.Next())
+            Monster[] monsters = shuffledMonsters.Take(numMonsters).ToArray();
 
             do
             {
@@ -116,7 +122,7 @@ namespace spartaTextDungeon
         static int CalculateDamage(int baseAttack)
         {
             Random random = new Random();
-            double error = Math.Ceiling(baseAttack * 0.1);      // 공격력의 10% 오차, 소수점은 올림 처리
+            double error = Math.Ceiling(baseAttack * 0.1);
             int randomValue = random.Next(-(int)error, (int)error + 1);
             return baseAttack + randomValue;
         }
@@ -212,11 +218,10 @@ namespace spartaTextDungeon
             int Def = 5;
             int HP = 100;
             int Gold = 1500;
-            //기본값은 private로 보호하고 변동될 수 있는 스텟들 구현하기
 
             public void PrintState()
             {
-                Console.WriteLine("상태보기");      //글씨 색 넣기 추가
+                Console.WriteLine("상태보기");
                 Console.WriteLine("캐릭터의 정보가 표시됩니다.");
                 Console.WriteLine();
                 Console.WriteLine
@@ -244,7 +249,7 @@ namespace spartaTextDungeon
                     case ConsoleKey.D0:
                         Console.WriteLine();
                         Console.WriteLine("시작메뉴로 돌아갑니다.");
-                        break;     //return 시작메뉴화면
+                        break;
                     default:
                         Console.WriteLine("");
                         Console.WriteLine("잘못된 선택입니다. 다시 선택해 주세요");
@@ -257,7 +262,6 @@ namespace spartaTextDungeon
         {
             Console.Clear();
             Console.WriteLine($"◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
-            // Console.WriteLine("{0}",("◆")*15);
             Console.WriteLine($"스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine($"이곳에서 던전으로 들어가기 전 활동을 할 수 있습니다.");
             Console.WriteLine($"◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
