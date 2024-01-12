@@ -7,20 +7,20 @@ namespace spartaTextDungeon.finalFile
     {
         static Player? _player;
         static List<Monster>? _monsters;
-        static void Main(string[] args)
-        {
-            GameDataSetting();
-            PrintStartLogo();
-            StartMenu();
-        }
+        //static void Main(string[] args)
+        //{
+        //    GameDataSetting();
+        //    PrintStartLogo();
+        //    StartMenu();
+        //}
 
         private static void GameDataSetting()
         {
             _player = new Player("Chad", "전사", 100, 100, 10, 5, 1500, 1);
             List<Monster> createMonster = new List<Monster>{
-            new Monster("Lv.2 미니언", 15, 5, 6,0),
-            new Monster("Lv.5 대포미니언", 25, 8, 10,1),
-            new Monster("LV.3 공허충", 10, 3, 8,2) };
+            new Monster("미니언", 15, 5, 6,0,2),
+            new Monster("대포미니언", 25, 8, 10,1,5),
+            new Monster("공허충", 10, 3, 8,2,3) };
             _monsters = RandomMonster(createMonster);
         }
         private static List<Monster> RandomMonster(List<Monster> monsters)
@@ -69,13 +69,33 @@ namespace spartaTextDungeon.finalFile
 
         private static void Battle()
         {
-
+            Console.Clear();
+            EnemyPhase();
+        }
+        private static void EnemyPhase()
+        {
+            Console.Clear();            
+            foreach (Monster monster in _monsters)
+            {
+                Console.Clear();
+                Console.WriteLine("Battle!!\n");
+                Console.WriteLine($"Lv.{monster.Level} {monster.Name}의 공격!");
+                Console.WriteLine($"{_player.Name} 을(를) 맞췄습니다. [데미지 : {monster.Attack}]\n");
+                Console.WriteLine($"Lv.{_player.Level} {_player.Name}");
+                Console.Write($"HP {_player.HP}");
+                _player.HP -= monster.Attack;                
+                Console.WriteLine($"-> {_player.HP}\n");
+                Console.WriteLine("0.다음\n");
+                Console.WriteLine("대상을 선택해주세요.\n>>");
+                CheckVailedInput(0, 0);
+            }           
+            //PlayerTurn(saveMonsters, player);
         }
 
         private static void State()
         {
-            Console.Clear();
-            Console.WriteLine("상태보기"); //글씨 색 넣기 추가
+            Console.Clear();                      
+            ChangeTextColor("상태보기", ConsoleColor.Green);
             Console.WriteLine("캐릭터의 정보가 표시됩니다.");
             Console.WriteLine();
             Console.WriteLine
@@ -96,6 +116,13 @@ namespace spartaTextDungeon.finalFile
                     break;
             }
 
+        }
+
+        private static void ChangeTextColor(string text,ConsoleColor consoleColor)
+        {
+            Console.ForegroundColor = consoleColor;
+            Console.WriteLine(text);
+            Console.ResetColor();
         }
 
         private static int CheckVailedInput(int min, int max)

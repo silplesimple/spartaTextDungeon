@@ -11,7 +11,7 @@ namespace spartaTextDungeon.finalFile
         public string Name { get; }
         public string Class { get; }
         public int MaxHP { get; }
-        public int HP { get; private set; }
+        public int HP { get; set; }
         public int Attack { get; }
         public int Def { get; }
         public int Gold { get; }
