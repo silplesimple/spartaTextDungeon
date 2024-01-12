@@ -15,7 +15,7 @@ namespace spartaTextDungeon
             newPlayerstate.PrintState();
         }
 
-        public void BattleStart()
+        static void BattleStart()
         {
             Player player = new Player("Chad", "전사", 100, 100, 10);
             Monster[] monsters = {
@@ -253,11 +253,10 @@ namespace spartaTextDungeon
             }
         }
 
-        static void StartMenu()
+        public static void StartMenu()
         {
             Console.Clear();
             Console.WriteLine($"◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
-            // Console.WriteLine("{0}",("◆")*15);
             Console.WriteLine($"스파르타 마을에 오신 여러분 환영합니다.");
             Console.WriteLine($"이곳에서 던전으로 들어가기 전 활동을 할 수 있습니다.");
             Console.WriteLine($"◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆◆");
@@ -267,6 +266,46 @@ namespace spartaTextDungeon
             Console.WriteLine();
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.WriteLine(">>");
+           
+            //int keyInput = int.Parse(Console.ReadLine());
+            switch (CheckValidInput(1, 2))
+            {
+                case 1:
+                    StateSelectMenu();
+                    break;
+                case 2:
+                    BattleStart();
+                    break;
+
+            }
+        }
+
+        //StartMenu : 선택 검증1
+        private static int CheckValidInput(int min, int max)
+        {
+            // 설명
+            // 아래 두가지 상황은 비정상 -> 재입력 수행
+            // (1) 숫자가 아닌 입력을 받은 경위
+            // (2) 숫자가 최솟값-최댓값의 범위를 넘는 경우
+
+            int keyInput;
+            bool result;
+            do
+            {
+                Console.WriteLine("원하시는 행동을 입력하세요");
+                result = int.TryParse(Console.ReadLine(), out keyInput);
+            } while (result == false || CheckIfValid(keyInput, min, max) == false);
+
+            //제대로 입력을 받았다는 뜻
+            return keyInput;
+
+        }
+
+        //StartMenu : 선택 검증2
+        private static bool CheckIfValid(int keyInput, int min, int max)
+        {
+            if (min <= keyInput && keyInput <= max) return true;
+            return false;
         }
 
         static void PrintStartLogo()
