@@ -49,6 +49,7 @@ namespace spartaTextDungeon.finalFile
             Console.WriteLine();
             Console.WriteLine("1.상태 보기");
             Console.WriteLine("2.전투 시작");
+            Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             Console.WriteLine(">>");
 
@@ -66,18 +67,22 @@ namespace spartaTextDungeon.finalFile
         private static void Battle()
         {
             Console.Clear();
-            Console.WriteLine("Battle!!\n");
-            playerInfo();
+            Console.WriteLine("Battle!!");
+            Console.WriteLine("");
             monterInfo();
-            Console.WriteLine("\n1. 공격\n");
+            playerInfo();
+            Console.WriteLine("1. 공격");
+            Console.WriteLine("0. 나가기\n");
             Console.WriteLine("원하시는 행동을 입력해주세요.\n>>");
-            switch (CheckVailedInput(1, 1))
+            switch (CheckVailedInput(0, 1))
             {
+                case 0:
+                    StartMenu();
+                    break;
                 case 1:
                     Attack();
                     break;
-            }
-            //_monsters.ForEach(monster => { if (monster.CheckIndex == CheckVailedInput(1, monster.CheckIndex)) });              
+            }       
         }
         static void monterInfo()
         {
@@ -99,7 +104,7 @@ namespace spartaTextDungeon.finalFile
 
         static void playerInfo()
         {
-            Console.WriteLine($"\n[내정보]");
+            Console.WriteLine($"[내정보]");
             Console.WriteLine($"{_player}");
             Console.WriteLine("");
         }
@@ -115,7 +120,7 @@ namespace spartaTextDungeon.finalFile
             Console.WriteLine("");
             playerInfo();
             Console.WriteLine("0. 취소\n");
-            Console.WriteLine("대상을 입력해주세요\n>>");
+            Console.WriteLine("대상을 선택해주세요.\n>>");
             int choice = CheckVailedInput(0, _monsters.Count);
             if (choice == 0)
             {
@@ -125,8 +130,6 @@ namespace spartaTextDungeon.finalFile
             {
                 Attack(_monsters[choice - 1]);
             }
-            //Console.WriteLine("\n게임 종료");
-
         }
 
         static void Attack(Monster monster)
@@ -232,8 +235,7 @@ namespace spartaTextDungeon.finalFile
             Console.ReadKey();
         }
 
-        static void Attack(Player
-            player, Monster monster)
+        static void Attack(Player player, Monster monster)
         {
             if (monster.IsDead())
             {
