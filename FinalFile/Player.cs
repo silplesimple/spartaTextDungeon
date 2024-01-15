@@ -8,21 +8,26 @@ namespace spartaTextDungeon.finalFile
 {
     internal class Player
     {
-        public string Name { get; }
+        public string Name { get; set; }
         public string Class { get; }
         public int MaxHP { get; }
         public int HP { get; set; }
+        public int MaxMP { get; }
+
+        public int MP { get; set; }
         public int Attack { get; }
         public int Def { get; }
         public int Gold { get; }
         public int Level { get; }
 
-        public Player(string name, string playerClass, int maxHP, int hp, int attack, int def, int gold, int level)
+        public Player(string name, string playerClass, int maxHP,int maxMp ,int hp,int mp, int attack, int def, int gold, int level)
         {
             Name = name;
             Class = playerClass;
             MaxHP = maxHP;
+            MaxMP = maxMp;
             HP = hp;
+            MP = mp;
             Attack = attack;
             Def = def;
             Gold = gold;
@@ -45,7 +50,7 @@ namespace spartaTextDungeon.finalFile
 
         public override string ToString()
         {
-            return $"Lv.1 {Name} ({Class})\nHP {HP}/{MaxHP}";
+            return $"Lv.1 {Name} ({Class})\nHP {HP}/{MaxHP}\nMP {MP}/{MaxMP}";
         }
 
     }
