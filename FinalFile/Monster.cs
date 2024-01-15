@@ -12,25 +12,23 @@ namespace spartaTextDungeon.finalFile
     {
         public string Name { get; }
         public int MaxHP { get; }
-        public int HP { get;  set; }
-        public int Attack { get; }        
+        public int HP { get; private set; }
+        public int Attack { get; }
+        public int CheckIndex { get; set; }
         public int Level { get; set; }
         public Monster(string name, int maxHP, int hp, int attack, int checkIndex, int level)
         {
             Name = name;
             MaxHP = maxHP;
             HP = maxHP;
-            Attack = attack;            
+            Attack = attack;
+            CheckIndex = checkIndex;
             Level = level;
         }
 
-        public object Clone()
-        {
-            return this.MemberwiseClone();
-        }
         public bool IsDead()
         {
-            return HP <= 0;            
+            return HP <= 0;
         }
 
         public void TakeDamage(int damage)
@@ -45,7 +43,7 @@ namespace spartaTextDungeon.finalFile
         public override string ToString()
         {
             string status = IsDead() ? "Dead" : $"HP {HP}";
-            return $"Lv{Level} {Name}  {status}";
+            return $"{Name}  {status}";
         }
     }
 }
