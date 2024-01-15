@@ -1,4 +1,5 @@
-﻿using System.Reflection.Emit;
+﻿using System.Numerics;
+using System.Reflection.Emit;
 using System.Xml.Linq;
 
 namespace spartaTextDungeon.finalFile
@@ -7,12 +8,12 @@ namespace spartaTextDungeon.finalFile
     {
         static Player? _player;
         static List<Monster>? _monsters;
-        //static void Main(string[] args)
-        //{
-        //    GameDataSetting();
-        //    PrintStartLogo();
-        //    StartMenu();
-        //}
+
+        static void Main(string[] args)
+        {
+            PrintStartLogo();
+            StartMenu();
+        }
 
         private static void GameDataSetting()
         {
@@ -23,6 +24,7 @@ namespace spartaTextDungeon.finalFile
             new Monster("공허충", 10, 3, 8,2,3) };
             _monsters = RandomMonster(createMonster);
         }
+
         private static List<Monster> RandomMonster(List<Monster> monsters)
         {
             List<Monster> saveMonster = new List<Monster>();
@@ -39,10 +41,10 @@ namespace spartaTextDungeon.finalFile
                         break;
                     }
                 }
-
             }
             return saveMonster;
         }
+
         private static void StartMenu()
         {
             Console.Clear();
@@ -70,8 +72,9 @@ namespace spartaTextDungeon.finalFile
         private static void Battle()
         {
             Console.Clear();
-            EnemyPhase();
+            GameDataSetting();
         }
+
         private static void EnemyPhase()
         {
             Console.Clear();            
@@ -92,6 +95,95 @@ namespace spartaTextDungeon.finalFile
             //PlayerTurn(saveMonsters, player);
         }
 
+        static void monterInfo()
+        {
+            Console.WriteLine("Lv.2 미니언  HP 15");
+            Console.WriteLine("Lv.5 대포미니언 HP 25");
+            Console.WriteLine("LV.3 공허충 HP 10");
+        }
+
+        static void DisplayInfo(Player player, Monster[] monsters)
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!!");
+            Console.WriteLine($"\n[내정보]");
+            Console.WriteLine($"{player}");
+            Console.WriteLine("");
+            monterInfo();
+            Console.WriteLine("");
+        }
+
+        static void Attack(Player player, Monster[] monsters)
+        {
+            DisplayInfo(player, monsters);
+
+            for (int i = 0; i < monsters.Length; i++)
+            {
+                Console.WriteLine($"{i + 1}. {monsters[i]}");
+            }
+
+            Console.WriteLine("0. 취소");
+
+            int choice = GetUserInput(monsters.Length);
+
+            if (choice == 0)
+            {
+                Console.WriteLine("취소되었습니다.");
+            }
+            else
+            {
+                Attack(player, monsters[choice - 1]);
+                DisplayInfo(player, monsters);
+
+                if (!monsters[choice - 1].IsDead())
+                {
+                    DisplayInfo(player, monsters);
+                }
+            }
+
+            Console.WriteLine("\n게임 종료");
+            Console.ReadKey();
+        }
+
+        static void Attack(Player
+            player, Monster monster)
+        {
+            if (monster.IsDead())
+            {
+                Console.WriteLine("잘못된 입력입니다. 이미 죽은 몬스터를 공격할 수 없습니다.");
+            }
+            else
+            {
+                Console.WriteLine($"몬스터 {monster.Name}을(를) 공격합니다.");
+                int damage = CalculateDamage(player.Attack);
+                monster.TakeDamage(damage);
+                Console.WriteLine($"몬스터에게 {damage}의 데미지를 입혔습니다.");
+
+                if (monster.IsDead())
+                {
+                    Console.WriteLine($"몬스터 {monster.Name}을(를) 처치했습니다.");
+                }
+            }
+        }
+
+        static int CalculateDamage(int baseAttack)
+        {
+            Random random = new Random();
+            double error = Math.Ceiling(baseAttack * 0.1);      // 공격력의 10% 오차, 소수점은 올림 처리
+            int randomValue = random.Next(-(int)error, (int)error + 1);
+            return baseAttack + randomValue;
+        }
+
+        static int GetUserInput(int maxChoice)
+        {
+            int choice;
+            while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > maxChoice)
+            {
+                Console.WriteLine("올바르지 않은 입력입니다. 다시 입력해주세요.");
+            }
+            return choice;
+        }
+
         private static void State()
         {
             Console.Clear();                      
@@ -109,13 +201,13 @@ namespace spartaTextDungeon.finalFile
             Console.WriteLine("0. 나가기");
             Console.WriteLine("");
             Console.Write("원하시는 행동을 입력 해주세요.\n>>");
+
             switch (CheckVailedInput(0, 0))
             {
                 case 0:
                     StartMenu();
                     break;
             }
-
         }
 
         private static void ChangeTextColor(string text,ConsoleColor consoleColor)
@@ -154,7 +246,6 @@ namespace spartaTextDungeon.finalFile
 
         static void PrintStartLogo()
         {
-
             Console.WriteLine($"▄████████    ▄███████▄    ▄████████    ▄████████     ███        ▄████████\n" +
                               $"███    ███   ███    ███   ███    ███   ███    ███ ▀█████████▄   ███    ███\n" +
                               $"███    █▀    ███    ███   ███    ███   ███    ███    ▀███▀▀██   ███    ███\n" +
@@ -179,6 +270,5 @@ namespace spartaTextDungeon.finalFile
 
             Console.ReadKey();
         }
-
     }
 }
