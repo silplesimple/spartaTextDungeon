@@ -8,6 +8,7 @@ namespace spartaTextDungeon
     {
         static Player? _player;
         static List<Monster>? _monsters;
+
         static void Main(string[] args)
         {
             GameDataSetting();
@@ -51,7 +52,7 @@ namespace spartaTextDungeon
             Console.WriteLine("2.전투 시작");
             Console.WriteLine("");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            Console.WriteLine(">>");
+            Console.Write(">>");
 
             switch (CheckVailedInput(1, 2))
             {
@@ -69,11 +70,13 @@ namespace spartaTextDungeon
             Console.Clear();
             ChangeTextColor("Battle!!", ConsoleColor.DarkYellow);
             Console.WriteLine("");
+            Console.WriteLine("[몬스터 정보]");
             monsterInfo();
             playerInfo();
             Console.WriteLine("1. 공격");
             Console.WriteLine("0. 나가기\n");
-            Console.WriteLine("원하시는 행동을 입력해주세요.\n>>");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.Write(">>");
             switch (CheckVailedInput(0, 1))
             {
                 case 0:
@@ -120,7 +123,8 @@ namespace spartaTextDungeon
             Console.WriteLine("");
             playerInfo();
             Console.WriteLine("0. 취소\n");
-            Console.WriteLine("대상을 선택해주세요.\n>>");
+            Console.WriteLine("대상을 선택해주세요.");
+            Console.Write(">>");
             int choice = CheckVailedInput(0, _monsters.Count);
             if (choice == 0)
             {
@@ -148,6 +152,7 @@ namespace spartaTextDungeon
             }
             else
             {
+                Console.WriteLine("");
                 Console.WriteLine($"몬스터 {monster.Name}을(를) 공격합니다.");
                 int damage = CalculateDamage(_player.Attack);
                 monster.HP -= damage;
@@ -184,7 +189,8 @@ namespace spartaTextDungeon
                     _player.HP -= monster.Attack;
                     Console.WriteLine($"-> {_player.HP}\n");
                     Console.WriteLine("0.다음\n");
-                    Console.WriteLine("대상을 선택해주세요.\n>>");
+                    Console.WriteLine("대상을 선택해주세요.\n");
+                    Console.Write(">>");
                     CheckVailedInput(0, 0);
                 }
             }
@@ -216,6 +222,7 @@ namespace spartaTextDungeon
                 Console.WriteLine("");
                 Console.WriteLine($"{_player}\n");
                 Console.WriteLine("0. 다음\n>>");
+                Console.WriteLine("");
                 CheckVailedInput(0, 0);
                 Console.ReadKey();
                 Environment.Exit(0);
@@ -476,7 +483,6 @@ namespace spartaTextDungeon
                               $"================================================================================\n" +
                               $"                           PRESS ANYKEY TO START                                \n" +
                               $"================================================================================\n");
-
 
             Console.ReadKey();
         }
