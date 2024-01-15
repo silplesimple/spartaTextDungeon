@@ -67,9 +67,9 @@ namespace spartaTextDungeon
         private static void Battle()
         {
             Console.Clear();
-            Console.WriteLine("Battle!!");
+            ChangeTextColor("Battle!!", ConsoleColor.DarkYellow);
             Console.WriteLine("");
-            monterInfo();
+            monsterInfo();
             playerInfo();
             Console.WriteLine("1. 공격");
             Console.WriteLine("0. 나가기\n");
@@ -84,7 +84,7 @@ namespace spartaTextDungeon
                     break;
             }
         }
-        static void monterInfo()
+        static void monsterInfo()
         {
             foreach (Monster monster in _monsters)
             {
@@ -112,7 +112,7 @@ namespace spartaTextDungeon
         static void Attack()
         {
             Console.Clear();
-            Console.WriteLine("Battle!!\n");
+            ChangeTextColor("Battle!!\n", ConsoleColor.DarkYellow);
             for (int i = 0; i < _monsters.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {_monsters[i]}");
@@ -176,7 +176,7 @@ namespace spartaTextDungeon
                 {
                     Console.Clear();
                     allMonstersDead = false;
-                    Console.WriteLine("Battle!!\n");
+                    ChangeTextColor("Battle!!\n", ConsoleColor.DarkYellow);
                     Console.WriteLine($"Lv.{monster.Level} {monster.Name}의 공격!");
                     Console.WriteLine($"{_player.Name} 을(를) 맞췄습니다. [데미지 : {monster.Attack}]\n");
                     Console.WriteLine($"Lv.{_player.Level} {_player.Name}");
@@ -192,7 +192,9 @@ namespace spartaTextDungeon
             if (allMonstersDead)
             {
                 Console.Clear();
-                Console.WriteLine("Victory!");
+                ChangeTextColor("Battle!! - Result", ConsoleColor.DarkYellow);
+                Console.WriteLine("");
+                ChangeTextColor("Victory!", ConsoleColor.Green);
                 Console.WriteLine("");
                 Console.WriteLine($"던전에서 몬스터 {_monsters.Count}마리를 잡았습니다.");
                 Console.WriteLine("");
@@ -208,9 +210,9 @@ namespace spartaTextDungeon
             if (_player.IsDead())
             {
                 Console.Clear();
-                Console.WriteLine("Battle!! - Result");
+                ChangeTextColor("Battle!! - Result", ConsoleColor.DarkYellow);
                 Console.WriteLine("");
-                Console.WriteLine("You Lose");
+                ChangeTextColor("You Lose", ConsoleColor.Red);
                 Console.WriteLine("");
                 Console.WriteLine($"{_player}\n");
                 Console.WriteLine("0. 다음\n>>");
@@ -225,7 +227,7 @@ namespace spartaTextDungeon
         static void DisplayInfo(Player player, Monster[] monsters)
         {
             Console.Clear();
-            Console.WriteLine("Battle!!");
+            ChangeTextColor("Battle!!", ConsoleColor.DarkYellow);
             Console.WriteLine($"\n[내정보]");
             Console.WriteLine($"{player}");
             Console.WriteLine("");
