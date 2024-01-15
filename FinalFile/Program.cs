@@ -147,7 +147,6 @@ namespace spartaTextDungeon.finalFile
             {
                 Console.WriteLine($"몬스터 {monster.Name}을(를) 공격합니다.");
                 int damage = CalculateDamage(_player.Attack);
-                //monster.TakeDamage(damage);
                 monster.HP -= damage;
                 Console.WriteLine($"몬스터에게 {damage}의 데미지를 입혔습니다.");
                 if (monster.IsDead())
@@ -162,14 +161,6 @@ namespace spartaTextDungeon.finalFile
                         break;
                 }
             }
-        }
-
-        static int CalculateDamage(int baseAttack)
-        {
-            Random random = new Random();
-            double error = Math.Ceiling(baseAttack * 0.1);      // 공격력의 10% 오차, 소수점은 올림 처리
-            int randomValue = random.Next(-(int)error, (int)error + 1);
-            return baseAttack + randomValue;
         }
 
         private static void EnemyPhase()
@@ -193,7 +184,6 @@ namespace spartaTextDungeon.finalFile
                 }
             }
             Battle();
-            //PlayerTurn(saveMonsters, player);
         }
 
         static void DisplayInfo(Player player, Monster[] monsters)
