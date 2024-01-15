@@ -1,4 +1,5 @@
-﻿using System.Reflection.Emit;
+﻿using System.Numerics;
+using System.Reflection.Emit;
 using System.Xml.Linq;
 
 namespace spartaTextDungeon.finalFile
@@ -7,12 +8,12 @@ namespace spartaTextDungeon.finalFile
     {
         static Player? _player;
         static List<Monster>? _monsters;
-        //static void Main(string[] args)
-        //{
-        //    GameDataSetting();
-        //    PrintStartLogo();
-        //    StartMenu();
-        //}
+        static void Main(string[] args)
+        {
+            GameDataSetting();
+            PrintStartLogo();
+            StartMenu();
+        }
 
         private static void GameDataSetting()
         {
@@ -31,15 +32,8 @@ namespace spartaTextDungeon.finalFile
             for (int i = 0; i < rndcnt; i++)
             {
                 int rndIndex = random.Next(0, monsters.Count);
-                foreach (Monster monster in monsters)
-                {
-                    if (rndIndex == monster.CheckIndex)
-                    {
-                        saveMonster.Add(monster);
-                        break;
-                    }
-                }
-
+                Monster selectedMonster = (Monster)monsters[rndIndex].Clone();
+                saveMonster.Add(selectedMonster);
             }
             return saveMonster;
         }
@@ -70,26 +64,134 @@ namespace spartaTextDungeon.finalFile
         private static void Battle()
         {
             Console.Clear();
-            EnemyPhase();
+            Console.WriteLine("Battle!!\n");
+            playerInfo();
+            monterInfo();
+            Console.WriteLine("\n1. 공격\n");
+            Console.WriteLine("원하시는 행동을 입력해주세요.\n>>");            
+            switch (CheckVailedInput(1, 1))
+            {
+                case 1:
+                    Attack();
+                        break;
+            }                                              
+                //_monsters.ForEach(monster => { if (monster.CheckIndex == CheckVailedInput(1, monster.CheckIndex)) });              
         }
+        static void monterInfo()
+        {
+            foreach (Monster monster in _monsters)
+            {                
+                if(monster.IsDead())
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine($"{monster}");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.WriteLine($"{monster}");
+                }
+            }
+            Console.Write("\n");
+        }
+
+        static void playerInfo()
+        {                        
+            Console.WriteLine($"\n[내정보]");
+            Console.WriteLine($"{_player}");
+            Console.WriteLine("");                        
+        }
+
+        static void Attack()
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!!\n");
+            for (int i = 0; i < _monsters.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {_monsters[i]}");
+            }
+            Console.WriteLine("");
+            playerInfo();
+            Console.WriteLine("0. 취소\n");
+            Console.WriteLine("대상을 입력해주세요\n>>");
+            int choice= CheckVailedInput(0,_monsters.Count);
+            if (choice == 0)
+            {
+                Battle();
+            }
+            else
+            {
+                Attack(_monsters[choice-1]);                
+            }                                                      
+            //Console.WriteLine("\n게임 종료");
+            
+        }
+
+        static void Attack(Monster monster)
+        {
+            if (monster.IsDead())
+            {
+                Console.Clear();
+                Console.WriteLine("잘못된 입력입니다. 이미 죽은 몬스터를 공격할 수 없습니다.");
+                Console.WriteLine("\n0 다음");
+                switch (CheckVailedInput(0, 0))
+                {
+                    case 0:
+                         Battle();
+                        break;
+                }
+            }
+            else
+            {                
+                Console.WriteLine($"몬스터 {monster.Name}을(를) 공격합니다.");
+                int damage = CalculateDamage(_player.Attack);
+                //monster.TakeDamage(damage);
+                monster.HP -= damage;                
+                Console.WriteLine($"몬스터에게 {damage}의 데미지를 입혔습니다.");
+                if (monster.IsDead())
+                {
+                    Console.WriteLine($"몬스터 {monster.Name}을(를) 처치했습니다.");
+                }
+                Console.WriteLine("\n0 다음");
+                switch (CheckVailedInput(0, 0))
+                {
+                    case 0:
+                        EnemyPhase();
+                        break;
+                }
+            }
+        }
+
+        static int CalculateDamage(int baseAttack)
+        {
+            Random random = new Random();
+            double error = Math.Ceiling(baseAttack * 0.1);      // 공격력의 10% 오차, 소수점은 올림 처리
+            int randomValue = random.Next(-(int)error, (int)error + 1);
+            return baseAttack + randomValue;
+        }            
+
         private static void EnemyPhase()
         {
             Console.Clear();            
             foreach (Monster monster in _monsters)
             {
-                Console.Clear();
-                Console.WriteLine("Battle!!\n");
-                Console.WriteLine($"Lv.{monster.Level} {monster.Name}의 공격!");
-                Console.WriteLine($"{_player.Name} 을(를) 맞췄습니다. [데미지 : {monster.Attack}]\n");
-                Console.WriteLine($"Lv.{_player.Level} {_player.Name}");
-                Console.Write($"HP {_player.HP}");
-                _player.HP -= monster.Attack;                
-                Console.WriteLine($"-> {_player.HP}\n");
-                Console.WriteLine("0.다음\n");
-                Console.WriteLine("대상을 선택해주세요.\n>>");
-                CheckVailedInput(0, 0);
-            }           
-            //PlayerTurn(saveMonsters, player);
+                if (!monster.IsDead())
+                {
+                    Console.Clear();
+                    Console.WriteLine("Battle!!\n");
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name}의 공격!");
+                    Console.WriteLine($"{_player.Name} 을(를) 맞췄습니다. [데미지 : {monster.Attack}]\n");
+                    Console.WriteLine($"Lv.{_player.Level} {_player.Name}");
+                    Console.Write($"HP {_player.HP}");
+                    _player.HP -= monster.Attack;
+                    Console.WriteLine($"-> {_player.HP}\n");
+                    Console.WriteLine("0.다음\n");
+                    Console.WriteLine("대상을 선택해주세요.\n>>");
+                    CheckVailedInput(0, 0);
+                }               
+            }                       
+            Battle();                   
+                   //PlayerTurn(saveMonsters, player);
         }
 
         private static void State()
