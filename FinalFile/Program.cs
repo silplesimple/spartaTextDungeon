@@ -73,7 +73,7 @@ namespace spartaTextDungeon.finalFile
             {
                 case 1:
                     Attack();
-                        break;
+                    break;
             }                                              
                 //_monsters.ForEach(monster => { if (monster.CheckIndex == CheckVailedInput(1, monster.CheckIndex)) });              
         }
@@ -108,7 +108,16 @@ namespace spartaTextDungeon.finalFile
             Console.WriteLine("Battle!!\n");
             for (int i = 0; i < _monsters.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {_monsters[i]}");
+                if (_monsters[i].IsDead())
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine($"{i + 1}. {_monsters[i]}");
+                    Console.ResetColor();
+                }
+                else
+                {
+                    Console.WriteLine($"{i + 1}. {_monsters[i]}");
+                }
             }
             Console.WriteLine("");
             playerInfo();
