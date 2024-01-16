@@ -65,9 +65,9 @@ namespace spartaTextDungeon.savefile
             SelectClass();
             InputNickname();
             List<Monster> createMonster = new List<Monster>{
-            new Monster("미니언", 15, 5, 6,2),
-            new Monster("대포미니언", 25, 8, 10,5),
-            new Monster("공허충", 10, 3, 8,3) };
+            new Monster("미니언", 15, 15, 6,2),
+            new Monster("대포미니언", 25, 25, 10,5),
+            new Monster("공허충", 10, 10, 8,3) };
             _monsters = RandomMonster(createMonster);
         }
 
@@ -592,6 +592,7 @@ namespace spartaTextDungeon.savefile
                     Console.Clear();
                     allMonstersDead = false;
                     ChangeTextColor("Battle!!\n", ConsoleColor.DarkYellow);
+                    Console.WriteLine($"적의턴!\n");
                     Console.WriteLine($"Lv.{monster.Level} {monster.Name}의 공격!");
                     Console.WriteLine($"{_player.Name} 을(를) 맞췄습니다. [데미지 : {monster.Attack}]\n");
                     Console.WriteLine($"Lv.{_player.Level} {_player.Name}");
