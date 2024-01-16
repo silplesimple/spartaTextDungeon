@@ -4,7 +4,7 @@ using System.Reflection.Emit;
 using System.Threading;
 using System.Xml.Linq;
 
-namespace spartaTextDungeon.savefile
+namespace spartaTextDungeon
 {
     internal class Program
     {
