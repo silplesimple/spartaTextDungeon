@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace spartaTextDungeon.finalFile
+namespace spartaTextDungeon.savefile
 {
     internal class Player
     {
