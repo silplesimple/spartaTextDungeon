@@ -8,14 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="FinalFile\Program.cs" />
     <Compile Remove="Inventory.cs" />
     <Compile Remove="Monster.cs" />
     <Compile Remove="MonsterAvatar.cs" />
+    <Compile Remove="Player.cs" />
+    <Compile Remove="Player1.cs" />
     <Compile Remove="PrintStartLogo.cs" />
+    <Compile Remove="savefile\Program.cs" />
     <Compile Remove="StartMenu.cs" />
     <Compile Remove="Status.cs" />
     <Compile Remove="test.cs" />
-    <Compile Remove="TextDungeonGame.cs" />
   </ItemGroup>
 
 </Project>
