@@ -6,7 +6,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <UseWindowsForms>True</UseWindowsForms>
-    <BaseOutputPath>C:\Users\user\source\repos\CampProgram\spartaTextDungeon\spartaTextDungeon</BaseOutputPath>
+    <BaseOutputPath></BaseOutputPath>
+    <BaseIntermediateOutputPath />
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,10 +20,6 @@
     <Compile Remove="test.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="Monster.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Program.cs" />
-  </ItemGroup>
+ 
 
 </Project>

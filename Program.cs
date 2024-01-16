@@ -67,9 +67,9 @@ namespace spartaTextDungeon
             SelectClass();
             InputNickname();
             List<Monster> createMonster = new List<Monster>{
-            new Monster("미니언", 15, 5, 6,0,2),
-            new Monster("대포미니언", 25, 8, 10,1,5),
-            new Monster("공허충", 10, 3, 8,2,3) };
+            new Monster("미니언", 15,15, 6,2),
+            new Monster("대포미니언", 25, 25, 10,5),
+            new Monster("공허충", 10, 10, 8,3) };
             _monsters = RandomMonster(createMonster);
         }
 
@@ -259,7 +259,7 @@ namespace spartaTextDungeon
                 _player.MP -= fireBallMp;
                 _monsters[choiceIndex - 1].HP -= fireBall;
                 Console.WriteLine($"{_player.Name}의 스킬 발동!");
-                Console.WriteLine($"알파 스트라이크!");
+                Console.WriteLine($"파이어볼!");
                 Console.WriteLine($"\n{_monsters[choiceIndex - 1].Name}의 HP가 {fireBall}만큼 닳았습니다! ");
                 if (_monsters[choiceIndex - 1].IsDead())
                 {
