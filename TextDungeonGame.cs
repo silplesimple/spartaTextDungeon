@@ -153,13 +153,13 @@ namespace spartaTextDungeon
             else
             {
                 Console.WriteLine("");
-                Console.WriteLine($"몬스터 {monster.Name}을(를) 공격합니다.");
+                Console.WriteLine($"몬스터 {monster.Name}를 공격합니다.");
                 int damage = CalculateDamage(_player.Attack);
                 monster.HP -= damage;
                 Console.WriteLine($"몬스터에게 {damage}의 데미지를 입혔습니다.");
                 if (monster.IsDead())
                 {
-                    Console.WriteLine($"몬스터 {monster.Name}을(를) 처치했습니다.");
+                    Console.WriteLine($"몬스터 {monster.Name}를 처치했습니다.");
                 }
                 Console.WriteLine("\n0 다음");
                 switch (CheckVailedInput(0, 0))
@@ -183,7 +183,7 @@ namespace spartaTextDungeon
                     allMonstersDead = false;
                     ChangeTextColor("Battle!!\n", ConsoleColor.DarkYellow);
                     Console.WriteLine($"Lv.{monster.Level} {monster.Name}의 공격!");
-                    Console.WriteLine($"{_player.Name} 을(를) 맞췄습니다. [데미지 : {monster.Attack}]\n");
+                    Console.WriteLine($"{_player.Name} 를 맞췄습니다. [데미지 : {monster.Attack}]\n");
                     Console.WriteLine($"Lv.{_player.Level} {_player.Name}");
                     Console.Write($"HP {_player.HP}");
                     _player.HP -= monster.Attack;
@@ -285,14 +285,14 @@ namespace spartaTextDungeon
             }
             else
             {
-                Console.WriteLine($"몬스터 {monster.Name}을(를) 공격합니다.");
+                Console.WriteLine($"몬스터 {monster.Name}를 공격합니다.");
                 int damage = CalculateDamage(player.Attack);
                 monster.TakeDamage(damage);
                 Console.WriteLine($"몬스터에게 {damage}의 데미지를 입혔습니다.");
 
                 if (monster.IsDead())
                 {
-                    Console.WriteLine($"몬스터 {monster.Name}을(를) 처치했습니다.");
+                    Console.WriteLine($"몬스터 {monster.Name}를 처치했습니다.");
                 }
             }
         }
@@ -488,7 +488,6 @@ namespace spartaTextDungeon
             Console.WriteLine(" | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |");
             Console.WriteLine("  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------' ");
 
-
             Console.WriteLine(" .----------------.  .----------------.  .----------------.  .----------------. ");
             Console.WriteLine("| .--------------. || .--------------. || .--------------. || .--------------. |");
             Console.WriteLine("| |    ______    | || |      __      | || | ____    ____ | || |  _________   | |");
@@ -500,7 +499,6 @@ namespace spartaTextDungeon
             Console.WriteLine("| |              | || |              | || |              | || |              | |");
             Console.WriteLine("| '--------------' || '--------------' || '--------------' || '--------------' |");
             Console.WriteLine(" '----------------'  '----------------'  '----------------'  '----------------' ");
-
 
             Console.ReadKey();
         }
