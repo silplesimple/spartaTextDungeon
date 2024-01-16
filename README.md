@@ -33,3 +33,4 @@ C#을 언어를 사용하여 만든 텍스트 게임입니다.
 - main - program.cs
 
 ## 시연영상
+[영상링크](https://youtu.be/Q7foow6wT78)
