@@ -2,20 +2,22 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <UseWindowsForms>True</UseWindowsForms>
+    <BaseOutputPath>C:\Users\user\source\repos\CampProgram\spartaTextDungeon\spartaTextDungeon</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Inventory.cs" />
-    <Compile Remove="Monster.cs" />
-    <Compile Remove="MonsterAvatar.cs" />
     <Compile Remove="PrintStartLogo.cs" />
-    <Compile Remove="StartMenu.cs" />
-    <Compile Remove="Status.cs" />
     <Compile Remove="test.cs" />
-    <Compile Remove="TextDungeonGame.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Monster.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="Program.cs" />
   </ItemGroup>
 
 </Project>
